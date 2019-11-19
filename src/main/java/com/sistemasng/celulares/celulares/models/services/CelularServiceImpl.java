@@ -10,6 +10,7 @@ import com.sistemasng.celulares.celulares.models.entities.Celular;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -24,8 +25,15 @@ public class CelularServiceImpl implements ICelularService{
     
     // SELECT * FROM nivel Objeto
     @Override
+    @Transactional(readOnly = true)
     public List<Celular> findAll(){
-        return dao.findAll();
+        return (List<Celular>) dao.findAll();
+    }
+
+    @Override
+    @Transactional
+    public void save(Celular celular) {
+        dao.save(celular);
     }
     
 }

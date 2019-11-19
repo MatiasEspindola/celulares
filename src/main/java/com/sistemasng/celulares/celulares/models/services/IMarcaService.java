@@ -16,4 +16,6 @@ public interface IMarcaService {
     
     public List<Marca> findAll();
     
+    public Marca findById(int id);
+    
 }

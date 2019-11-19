@@ -16,4 +16,6 @@ public interface ICelularService {
     
     public List<Celular> findAll();
     
+    public void save(Celular celular);
+    
 }
