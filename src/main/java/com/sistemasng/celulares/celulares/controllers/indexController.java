@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -34,6 +35,8 @@ public class indexController {
 
     @Autowired
     private MarcaServiceImpl marcaServ;
+    
+    private static boolean editar;
 
     // INDEX
     @GetMapping({"/", "/index"})
@@ -53,10 +56,34 @@ public class indexController {
         Celular celular = new Celular();
         List<Marca> marcas = marcaServ.findAll();
         
+        editar = false;
+        
+        m.put("editar", editar);
+
         m.put("marcas", marcas);
 
-        m.put("titulo", "Celulares - Registrar");
+        m.put("titulo", "Registrar");
         m.put("celular", celular);
+
+        return "/registrar";
+    }
+
+    @GetMapping("/editar/{id}")
+    public String editar(Map m, @PathVariable("id") int id) {
+
+        Celular celular = celularServ.findById(id);
+
+        m.put("titulo", "Editar");
+
+        List<Marca> marcas = marcaServ.findAll();
+
+        m.put("marcas", marcas);
+
+        m.put("celular", celular);
+        
+        editar = true;
+        
+        m.put("editar", editar);
 
         return "/registrar";
     }

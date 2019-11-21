@@ -29,6 +29,12 @@ public class CelularServiceImpl implements ICelularService{
     public List<Celular> findAll(){
         return (List<Celular>) dao.findAll();
     }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Celular findById(int id){
+        return dao.findById(id).orElse(null);
+    }
 
     @Override
     @Transactional
